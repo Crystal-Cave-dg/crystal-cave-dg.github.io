@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Text Center</title>
+    <title>Draggable Text</title>
     <style>
         body {
             display: flex;
@@ -12,12 +12,48 @@
             height: 100vh;
             margin: 0;
         }
-        h1 {
+        #draggable {
             font-size: 5em;
+            cursor: move;
+            position: absolute;
         }
     </style>
 </head>
 <body>
-    <h1>QAQ ES KEREL</h1>
+    <div id="draggable">QAQ ES KEREL</div>
+
+    <script>
+        dragElement(document.getElementById("draggable"));
+
+        function dragElement(element) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            element.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    </script>
 </body>
 </html>
