@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Draggable Text</title>
+    <title>Crazy Draggable Text</title>
     <style>
         body {
             display: flex;
@@ -11,11 +11,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background: #000;
         }
         #draggable {
             font-size: 5em;
             cursor: move;
             position: absolute;
+            color: white;
+            transition: transform 0.2s;
+            animation: shadow-animation 2s infinite alternate;
+        }
+        @keyframes shadow-animation {
+            0% {
+                text-shadow: 0px 0px 10px #fff, 0px 0px 20px #f0f, 0px 0px 30px #0ff, 0px 0px 40px #f0f;
+            }
+            100% {
+                text-shadow: 0px 0px 20px #0ff, 0px 0px 30px #f0f, 0px 0px 40px #fff, 0px 0px 50px #0ff;
+            }
+        }
+        #draggable:hover {
+            transform: rotate(360deg);
         }
     </style>
 </head>
@@ -23,6 +38,12 @@
     <div id="draggable">QAQ ES KEREL</div>
 
     <script>
+        const colors = ['red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange'];
+
+        document.getElementById('draggable').onclick = function() {
+            this.style.color = colors[Math.floor(Math.random() * colors.length)];
+        };
+
         dragElement(document.getElementById("draggable"));
 
         function dragElement(element) {
